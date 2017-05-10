@@ -192,5 +192,5 @@ definitions:
         items:
           type: string
         description: "If the object is not valid, you will find the reasons here"
-    title: EmailValidationRequest
+    title: ValidationResponse
     description: Payload to validate email addresses
