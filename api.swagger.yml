@@ -1,0 +1,196 @@
+swagger: "2.0"
+
+info:
+  version: 1.0.0
+  title: Sysworld Servicios S.A. API
+  description: Public services offered by Sysworld
+
+schemes:
+  - https
+host: api.sysworld.com.ar
+
+paths:
+  /validations/email:
+    post:
+      summary: Validates an email address
+      description: This will attempt to validate an email address testing its consistency and other factors
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password
+        required: true
+        type: string
+      - in: body
+        name: EmailValidationRequest
+        required: true
+        schema:
+          $ref: "#/definitions/EmailValidationRequest"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/ValidationResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+definitions:
+  ErrorResponse:
+    type: object
+    required:
+    - success
+    - error_description
+    properties:
+      success:
+        type: boolean
+        description: Always false on errors
+      error_description:
+        type: array
+        description: One or more specific error messages for client errors
+        items:
+          type: string
+    title: ErrorResponse
+    description: This is an error response for requests with status other than 2xx
+
+  EmailValidationRequest:
+    type: object
+    required:
+    - email
+    properties:
+      email:
+        type: string
+        description: The email address to validate
+    title: EmailValidationRequest
+    description: Payload to validate email addresses
+
+  ValidationResponse:
+    type: object
+    required:
+    - id
+    - valid
+    - success
+    - last_step
+    - errors
+    properties:
+      id:
+        type: string
+        description: The operation ID
+      valid:
+        type: boolean
+        description: Final result of the validation
+      success:
+        type: boolean
+        description: Result of the operation itself (can be true even if the object is not valid)
+      last_step:
+        type: string
+        description: Last step reached in the validation chain
+      errors:
+        type: array
+        items:
+          type: string
+        description: "If the object is not valid, you will find the reasons here"
+    title: EmailValidationRequest
+    description: Payload to validate email addresses
