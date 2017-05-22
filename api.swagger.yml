@@ -166,20 +166,30 @@ definitions:
     title: EmailValidationRequest
     description: Payload to validate email addresses
 
+  EmailValidationResult:
+    type: "string"
+    title: "EmailValidationResult"
+    description: "Possible result values for email validations"
+    enum:
+    - valid
+    - invalid
+    - unknown
+    - retry
+
   ValidationResponse:
     type: object
     required:
     - id
-    - valid
+    - result
     - success
     - last_step
-    - errors
+    - extra
     properties:
       id:
         type: string
         description: The operation ID
-      valid:
-        type: boolean
+      result:
+        $ref: "#/definitions/EmailValidationResult"
         description: Final result of the validation
       success:
         type: boolean
@@ -187,10 +197,10 @@ definitions:
       last_step:
         type: string
         description: Last step reached in the validation chain
-      errors:
+      extra:
         type: array
         items:
           type: string
-        description: "If the object is not valid, you will find the reasons here"
+        description: "Extra information after validation, e.g: error descriptions"
     title: ValidationResponse
     description: Payload to validate email addresses
