@@ -174,7 +174,7 @@ definitions:
     - valid
     - invalid
     - unknown
-    - retry
+    - retry_later
 
   ValidationResponse:
     type: object
