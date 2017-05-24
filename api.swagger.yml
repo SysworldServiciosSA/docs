@@ -197,6 +197,9 @@ definitions:
       last_step:
         type: string
         description: Last step reached in the validation chain
+      hint:
+        type: string
+        description: Suggestion when returning a result as invalid
       extra:
         type: array
         items:
