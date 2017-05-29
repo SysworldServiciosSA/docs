@@ -2,5 +2,10 @@
 Public Documentation
 
 ## REST API
-Click [here](http://editor.swagger.io/#/?import=https%3A%2F%2Fraw.githubusercontent.com%2FSysworldServiciosSA%2Fdocs%2Fmaster%2Fapi.swagger.yml) to
-open our REST API documentation in the Swagger Editor.
+To open it up in the [Online Swagger Editor](http://editor.swagger.io/) do the
+following:
+
+1. Copy [this link](https://raw.githubusercontent.com/SysworldServiciosSA/docs/master/api.swagger.yml)
+2. Open the [Online Swagger Editor](http://editor.swagger.io/)
+3. Click on `File -> Import URL`
+4. Paste the URL copied in Step 1.
