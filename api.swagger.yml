@@ -148,7 +148,7 @@ paths:
       parameters:
       - name: Authorization
         in: header
-        description: Use 'Basic' with 'apikey' as username and your api key as the password
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
         required: true
         type: string
       - in: body
