@@ -10,6 +10,133 @@ schemes:
 host: api.sysworld.com.ar
 
 paths:
+  /login:
+    post:
+      summary: Obtain a JWT from a username/password (for web sessions)
+      description: Useful when logging in from a web interface or other UI in order to open a session
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with your username and password
+        required: true
+        type: string
+      - in: body
+        name: EmptyRequest
+        required: true
+        schema:
+          $ref: "#/definitions/Empty"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/LoginResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
   /validations/email:
     post:
       summary: Validates an email address
@@ -138,6 +265,9 @@ paths:
             Content-Type:
               type: string
 definitions:
+  Empty:
+    type: "object"
+    title: "Empty Schema"
   ErrorResponse:
     type: object
     required:
@@ -176,6 +306,17 @@ definitions:
     - unknown
     - retry_later
 
+  LoginResponse:
+    type: object
+    required:
+    - token
+    properties:
+      token:
+        type: string
+        description: A JWT
+    title: LoginResponse
+    description: Login Response
+
   ValidationResponse:
     type: object
     required:
@@ -206,4 +347,4 @@ definitions:
           type: string
         description: "Extra information after validation, e.g: error descriptions"
     title: ValidationResponse
-    description: Payload to validate email addresses
+    description: Response of an email address validation
