@@ -143,6 +143,7 @@ paths:
       description: This will attempt to validate an email address testing its consistency and other factors
       consumes:
         - application/json
+        - text/csv
       produces:
         - application/json
       parameters:
@@ -161,6 +162,23 @@ paths:
           description: Successful operation
           schema:
             $ref: "#/definitions/ValidationResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        202:
+          description: Your batch was accepted and will be eventually processed
+          schema:
+            $ref: "#/definitions/ValidationBatchResponse"
           headers:
             X-Request-ID:
               type: string
@@ -316,7 +334,20 @@ definitions:
         description: A JWT
     title: LoginResponse
     description: Login Response
-
+  ValidationBatchResponse:
+    type: object
+    required:
+    - batch_id
+    - success
+    properties:
+      batch_id:
+        type: integer
+        description: The batch ID
+      success:
+        type: boolean
+        description: Result of the operation itself (can be true even if the object is not valid)
+    title: ValidationBatchResponse
+    description: Response for a validation batch creation
   ValidationResponse:
     type: object
     required:
