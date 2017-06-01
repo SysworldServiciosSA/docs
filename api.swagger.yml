@@ -176,7 +176,7 @@ paths:
             Access-Control-Allow-Headers:
               type: string
         202:
-          description: Your batch was accepted and will be eventually processed
+          description: Only when content-type is text/csv. Your batch was accepted and will be eventually processed
           schema:
             $ref: "#/definitions/ValidationBatchResponse"
           headers:
