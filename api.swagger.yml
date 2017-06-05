@@ -282,6 +282,134 @@ paths:
               type: string
             Content-Type:
               type: string
+
+  /validations/batch/{id}:
+    get:
+      summary: Returns batch information or result
+      description: When requested with 'Accept: text/csv' will return the batch result. When requested with 'Accept: application/json' will return the information of the given batch id.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+        - text/csv
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/Batch"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
 definitions:
   Empty:
     type: "object"
