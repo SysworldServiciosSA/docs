@@ -326,11 +326,13 @@ paths:
                 updated_str: "2017-06-05T17:46:37Z"
               success: true
             text/csv:
-              valid;user1@domain.com;extra_field_1;extra_field_2
+              email;result;hint;custom_fields
 
-              invalid;user2@domain.com;extra_field_1;extra_field_2
+              user1@domain.com;valid;uzer@domain.com;extra_field_1;extra_field_2
 
-              unknown;user3@domain.com;extra_field_1;extra_field_2
+              user2@domain.com;invalid;;extra_field_1;extra_field_2
+
+              user3@domain.com;unknown;;extra_field_1;extra_field_2
           schema:
             $ref: "#/definitions/BatchResponse"
           headers:
