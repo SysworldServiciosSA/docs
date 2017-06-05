@@ -143,7 +143,6 @@ paths:
       description: This will attempt to validate an email address testing its consistency and other factors
       consumes:
         - application/json
-        - text/csv
       produces:
         - application/json
       parameters:
@@ -310,15 +309,28 @@ paths:
       responses:
         200:
           description: Successful operation
-          #examples:
-          #  application/json:
-          #    $ref: "#/definitions/Batch"
-          #  text/csv:
-          #    valid;user1@domain.com;extra_field_1;extra_field_2
-          #    invalid;user2@domain.com;extra_field_1;extra_field_2
-          #    unknown;user3@domain.com;extra_field_1;extra_field_2
+          examples:
+            application/json:
+              batch:
+                id: 123
+                type: "email_validation"
+                request_id: "ba4d0af8-4a1c-11e7-829a-7831c1c0328a"
+                state: "finished"
+                error: "internal_error"
+                error_line: 400
+                rows_total: 500
+                rows_processed: 400
+                created: 1496684197
+                updated: 1496684797
+                created_str: "2017-06-05T17:36:37Z"
+                updated_str: "2017-06-05T17:46:37Z"
+              success: true
+            text/csv:
+              valid;user1@domain.com;extra_field_1;extra_field_2
+              invalid;user2@domain.com;extra_field_1;extra_field_2
+              unknown;user3@domain.com;extra_field_1;extra_field_2
           schema:
-            $ref: "#/definitions/Batch"
+            $ref: "#/definitions/BatchResponse"
           headers:
             X-Request-ID:
               type: string
@@ -571,6 +583,23 @@ definitions:
       updated_str:
         type: string
         description: ISO8601 date of the last batch update
+    title: Batch
+    description: A batch
+
+  BatchResponse:
+    type: object
+    required:
+    - batch
+    - success
+    properties:
+      batch:
+        $ref: "#/definitions/Batch"
+        description: The information of the requested batch
+      success:
+        type: boolean
+        description: Result of the operation itself (can be true even if the object is not valid)
+    title: BatchResponse
+    description: Result of requesting a batch information
 
   ValidationResponse:
     type: object
