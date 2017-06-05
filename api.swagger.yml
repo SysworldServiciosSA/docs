@@ -327,7 +327,9 @@ paths:
               success: true
             text/csv:
               valid;user1@domain.com;extra_field_1;extra_field_2
+
               invalid;user2@domain.com;extra_field_1;extra_field_2
+
               unknown;user3@domain.com;extra_field_1;extra_field_2
           schema:
             $ref: "#/definitions/BatchResponse"
