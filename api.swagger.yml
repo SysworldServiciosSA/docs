@@ -286,7 +286,7 @@ paths:
   /validations/batch/{id}:
     get:
       summary: Returns batch information or result
-      description: When requested with 'Accept: text/csv' will return the batch result. When requested with 'Accept: application/json' will return the information of the given batch id.
+      description: "When requested with 'Accept: text/csv' will return the batch result. When requested with 'Accept: application/json' will return the information of the given batch id."
       consumes:
         - application/json
       produces:
@@ -300,7 +300,7 @@ paths:
         type: string
       - name: Accept
         in: header
-        description: When requested with 'Accept: text/csv' will return the batch result. When requested with 'Accept: application/json' will return the information of the given batch id.
+        description: "When requested with 'Accept: text/csv' will return the batch result. When requested with 'Accept: application/json' will return the information of the given batch id."
         required: true
         type: string
       - name: "id"
