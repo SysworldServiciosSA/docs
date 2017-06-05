@@ -286,6 +286,7 @@ definitions:
   Empty:
     type: "object"
     title: "Empty Schema"
+
   ErrorResponse:
     type: object
     required:
@@ -334,6 +335,7 @@ definitions:
         description: A JWT
     title: LoginResponse
     description: Login Response
+
   ValidationBatchResponse:
     type: object
     required:
@@ -348,6 +350,88 @@ definitions:
         description: Result of the operation itself (can be true even if the object is not valid)
     title: ValidationBatchResponse
     description: Response for a validation batch creation
+
+  BatchTypes:
+    type: "string"
+    title: "BatchTypes"
+    description: "Possible batch types"
+    enum:
+    - email_validation
+
+  BatchStates:
+    type: "string"
+    title: "BatchStates"
+    description: "Possible batch states"
+    enum:
+    - finished
+    - processing
+    - ready
+    - validating
+    - failed
+    - pending
+
+  BatchErrors:
+    type: "string"
+    title: "BatchErrors"
+    description: "Possible batch errors"
+    enum:
+    - internal_error
+    - line_too_long
+    - separator_not_found
+
+  Batch:
+    type: object
+    required:
+    - id
+    - type
+    - request_id
+    - state
+    - error
+    - error_line
+    - rows_total
+    - rows_processed
+    - created
+    - updated
+    - created_str
+    - updated_str
+    properties:
+      id:
+        type: integer
+        description: The Batch ID
+      type:
+        $ref: "#/definitions/BatchTypes"
+        description: The Batch Type
+      request_id:
+        type: string
+        description: The request ID that originated the batch
+      state:
+        $ref: "#/definitions/BatchStates"
+        description: Current batch state
+      error:
+        $ref: "#/definitions/BatchErrors"
+        description: Last batch error
+      error_line:
+        type: integer
+        description: Number of line that caused an error in the batch
+      rows_total:
+        type: integer
+        description: Total number of lines recogniced in the batch
+      rows_processed:
+        type: integer
+        description: Total number of processed rows in the batch
+      created:
+        type: integer
+        description: Unix timestamp of the batch creation
+      updated:
+        type: integer
+        description: Unix timestamp for last batch update
+      created_str:
+        type: string
+        description: ISO8601 date of the batch creation
+      updated_str:
+        type: string
+        description: ISO8601 date of the last batch update
+
   ValidationResponse:
     type: object
     required:
