@@ -531,7 +531,6 @@ definitions:
     enum:
     - internal_error
     - line_too_long
-    - separator_not_found
 
   Batch:
     type: object
