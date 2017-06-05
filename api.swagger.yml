@@ -517,13 +517,13 @@ definitions:
     title: "BatchStates"
     description: "Possible batch states"
     enum:
-    - finished
-    - processing
+    - pending
     - ready
     - validating
+    - processing
+    - exporting
     - failed
-    - pending
-
+    - finished
   BatchErrors:
     type: "string"
     title: "BatchErrors"
