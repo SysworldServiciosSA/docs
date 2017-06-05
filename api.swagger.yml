@@ -310,6 +310,13 @@ paths:
       responses:
         200:
           description: Successful operation
+          #examples:
+          #  application/json:
+          #    $ref: "#/definitions/Batch"
+          #  text/csv:
+          #    valid;user1@domain.com;extra_field_1;extra_field_2
+          #    invalid;user2@domain.com;extra_field_1;extra_field_2
+          #    unknown;user3@domain.com;extra_field_1;extra_field_2
           schema:
             $ref: "#/definitions/Batch"
           headers:
