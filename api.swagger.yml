@@ -7,7 +7,7 @@ info:
 
 schemes:
   - https
-host: api.enviocertificado.com
+host: api-staging.enviocertificado.com
 
 paths:
   /login:
