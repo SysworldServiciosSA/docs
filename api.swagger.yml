@@ -7,7 +7,7 @@ info:
 
 schemes:
   - https
-host: api.sysworld.com.ar
+host: api.enviocertificado.com
 
 paths:
   /login:
