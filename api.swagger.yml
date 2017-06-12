@@ -555,16 +555,13 @@ definitions:
         description: The Batch ID
       type:
         $ref: "#/definitions/BatchTypes"
-        description: The Batch Type
       request_id:
         type: string
         description: The request ID that originated the batch
       state:
         $ref: "#/definitions/BatchStates"
-        description: Current batch state
       error:
         $ref: "#/definitions/BatchErrors"
-        description: Last batch error
       error_line:
         type: integer
         description: Number of line that caused an error in the batch
@@ -597,7 +594,6 @@ definitions:
     properties:
       batch:
         $ref: "#/definitions/Batch"
-        description: The information of the requested batch
       success:
         type: boolean
         description: Result of the operation itself (can be true even if the object is not valid)
@@ -618,7 +614,6 @@ definitions:
         description: The operation ID
       result:
         $ref: "#/definitions/EmailValidationResult"
-        description: Final result of the validation
       success:
         type: boolean
         description: Result of the operation itself (can be true even if the object is not valid)
