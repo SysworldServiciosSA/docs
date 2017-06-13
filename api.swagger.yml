@@ -162,6 +162,8 @@ paths:
           schema:
             $ref: "#/definitions/ValidationResponse"
           headers:
+            X-New-JWT:
+              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
@@ -179,6 +181,8 @@ paths:
           schema:
             $ref: "#/definitions/ValidationBatchResponse"
           headers:
+            X-New-JWT:
+              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
@@ -196,6 +200,8 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
           headers:
+            X-New-JWT:
+              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
@@ -271,6 +277,8 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
           headers:
+            X-New-JWT:
+              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
@@ -336,6 +344,8 @@ paths:
           schema:
             $ref: "#/definitions/BatchResponse"
           headers:
+            X-New-JWT:
+              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
@@ -353,6 +363,8 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
           headers:
+            X-New-JWT:
+              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
@@ -428,6 +440,8 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
           headers:
+            X-New-JWT:
+              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
