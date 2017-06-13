@@ -13,7 +13,7 @@ paths:
   /login:
     post:
       summary: Obtain a JWT from a username/password (for web sessions)
-      description: Useful when logging in from a web interface or other UI in order to open a session
+      description: Useful when logging in from a web interface or other UI in order to open a session. Following requests will contain the header X-New-JWT with refreshed tokens.
       consumes:
         - application/json
       produces:
