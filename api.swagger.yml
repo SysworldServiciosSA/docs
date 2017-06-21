@@ -427,7 +427,7 @@ paths:
             Content-Type:
               type: string
 
-  /validations/batch/{id}:
+  /batch/{id}:
     get:
       summary: Returns batch information or result
       description: "When requested with 'Accept: text/csv' will return the batch result. When requested with 'Accept: application/json' will return the information of the given batch id."
