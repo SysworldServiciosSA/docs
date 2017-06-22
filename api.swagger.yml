@@ -137,7 +137,147 @@ paths:
               type: string
             Content-Type:
               type: string
-  /templates/{id}/to_pdf:
+  /pdfs/batch_configs/{id}:
+    post:
+      summary: Generates a PDF from an existing batch config
+      description: "Send a text file as content, can be CSV, fixed fields width, etc"
+      consumes:
+        - multipart/form-data
+        - text/csv
+      produces:
+        - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "id"
+        in: "path"
+        description: The Batch ID
+        required: true
+        type: "integer"
+      - name: file
+        in: formData
+        description: The uploaded file data
+        required: true
+        type: file
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/CreatedBatchResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+
+  /pdfs/templates/{id}:
     post:
       summary: Generates a PDF from an existing template
       description: Generates a PDF from an existing template
@@ -158,6 +298,7 @@ paths:
           $ref: "#/definitions/TemplateToPdfRequest"
       - name: "id"
         in: "path"
+        description: The template ID
         required: true
         type: "integer"
       responses:
@@ -316,7 +457,7 @@ paths:
         202:
           description: Only when content-type is text/csv. Your batch was accepted and will be eventually processed
           schema:
-            $ref: "#/definitions/ValidationBatchResponse"
+            $ref: "#/definitions/CreatedBatchResponse"
           headers:
             X-New-JWT:
               type: string
@@ -435,6 +576,7 @@ paths:
         - application/json
       produces:
         - application/json
+        - multipart/form-data
         - text/csv
       parameters:
       - name: Authorization
@@ -449,6 +591,7 @@ paths:
       #  type: string
       - name: "id"
         in: "path"
+        description: The Batch ID
         required: true
         type: "integer"
       responses:
@@ -696,7 +839,7 @@ definitions:
     title: LoginResponse
     description: Login Response
 
-  ValidationBatchResponse:
+  CreatedBatchResponse:
     type: object
     required:
     - batch_id
@@ -708,8 +851,8 @@ definitions:
       success:
         type: boolean
         description: Result of the operation itself (can be true even if the object is not valid)
-    title: ValidationBatchResponse
-    description: Response for a validation batch creation
+    title: CreatedBatchResponse
+    description: Response for a batch creation
 
   BatchTypes:
     type: "string"
