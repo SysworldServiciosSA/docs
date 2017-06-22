@@ -27,6 +27,7 @@ paths:
       - in: body
         name: EmptyRequest
         required: true
+        description: No payload
         schema:
           $ref: "#/definitions/Empty"
       responses:
@@ -154,7 +155,7 @@ paths:
         type: string
       - name: "id"
         in: "path"
-        description: The Batch ID
+        description: The Batch Configuration ID
         required: true
         type: "integer"
       - name: file
@@ -293,6 +294,7 @@ paths:
         type: string
       - in: body
         name: TemplateToPdfRequest
+        description: Payload to generate a PDF file from an existing template
         required: true
         schema:
           $ref: "#/definitions/TemplateToPdfRequest"
@@ -420,6 +422,8 @@ paths:
       summary: Validates an email address
       description: This will attempt to validate an email address testing its consistency and other factors
       consumes:
+        - multipart/form-data
+        - text/csv
         - application/json
       produces:
         - application/json
@@ -431,6 +435,7 @@ paths:
         type: string
       - in: body
         name: EmailValidationRequest
+        description: Payload to validate email addresses
         required: true
         schema:
           $ref: "#/definitions/EmailValidationRequest"
@@ -736,6 +741,7 @@ definitions:
   Empty:
     type: "object"
     title: "Empty Schema"
+    description: "No payload"
 
   ErrorResponse:
     type: object
@@ -873,6 +879,7 @@ definitions:
     - exporting
     - failed
     - finished
+
   BatchErrors:
     type: "string"
     title: "BatchErrors"
