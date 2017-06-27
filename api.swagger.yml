@@ -156,12 +156,12 @@ paths:
       - name: "organization_id"
         in: "query"
         required: false
-        type: "integer"
+        type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
       - name: "department_id"
         in: "query"
         required: false
-        type: "integer"
+        type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
       - name: "id"
         in: "path"
@@ -307,12 +307,12 @@ paths:
       - name: "organization_id"
         in: "query"
         required: false
-        type: "integer"
+        type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
       - name: "department_id"
         in: "query"
         required: false
-        type: "integer"
+        type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
       - in: body
         name: EmailValidationRequest
@@ -473,12 +473,12 @@ paths:
       - name: "organization_id"
         in: "query"
         required: false
-        type: "integer"
+        type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
       - name: "department_id"
         in: "query"
         required: false
-        type: "integer"
+        type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
       #- name: Accept
       #  in: header
@@ -635,7 +635,7 @@ paths:
       consumes:
         - application/json
       produces:
-        - application/pdf
+        - application/json
       parameters:
       - name: Authorization
         in: header
@@ -645,12 +645,12 @@ paths:
       - name: "organization_id"
         in: "query"
         required: false
-        type: "integer"
+        type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
       - name: "department_id"
         in: "query"
         required: false
-        type: "integer"
+        type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
       - name: "email"
         in: "query"
@@ -688,10 +688,8 @@ paths:
         required: true
         type: "integer"
       responses:
-        200:
-          description: Successful operation
-          schema:
-            $ref: "#/definitions/CreatedBatchResponse"
+        302:
+          description: Successful operation. Returns the link to download the PDF.
           headers:
             X-New-JWT:
               type: string
