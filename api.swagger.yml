@@ -629,7 +629,7 @@ paths:
             Content-Type:
               type: string
   /pdfs/customer/{customerId}:
-    post:
+    get:
       summary: Returns the given PDF for the given customer ID.
       description: Returns the given PDF for the given customer ID.
       consumes:
