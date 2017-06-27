@@ -153,6 +153,16 @@ paths:
         description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
         required: true
         type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "integer"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "integer"
+        description: "Required when using Bearer (i.e: JWT) authentication"
       - name: "id"
         in: "path"
         description: The Batch Configuration ID
@@ -294,6 +304,16 @@ paths:
         description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
         required: true
         type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "integer"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "integer"
+        description: "Required when using Bearer (i.e: JWT) authentication"
       - in: body
         name: EmailValidationRequest
         description: Payload to validate email addresses
@@ -450,6 +470,16 @@ paths:
         description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
         required: true
         type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "integer"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "integer"
+        description: "Required when using Bearer (i.e: JWT) authentication"
       #- name: Accept
       #  in: header
       #  description: "When requested with 'Accept: text/csv' will return the batch result. When requested with 'Accept: application/json' will return the information of the given batch id."
@@ -489,6 +519,179 @@ paths:
               user3@domain.com;unknown;;extra_field_1;extra_field_2
           schema:
             $ref: "#/definitions/BatchResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+  /pdfs/customer/{customerId}:
+    post:
+      summary: Returns the given PDF for the given customer ID.
+      description: Returns the given PDF for the given customer ID.
+      consumes:
+        - application/json
+      produces:
+        - application/pdf
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "integer"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "integer"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "email"
+        in: "query"
+        required: true
+        type: "string"
+        description: The target Email for the PDF
+      - name: "field1"
+        in: "query"
+        required: true
+        type: "string"
+        description: ID Field 2
+      - name: "field2"
+        in: "query"
+        required: true
+        type: "string"
+        description: ID Field 2
+      - name: "field3"
+        in: "query"
+        required: true
+        type: "string"
+        description: ID Field 3
+      - name: "field4"
+        in: "query"
+        required: true
+        type: "string"
+        description: ID Field 4
+      - name: "field5"
+        in: "query"
+        required: true
+        type: "string"
+        description: ID Field 5
+      - name: "customerId"
+        in: "path"
+        description: The customer ID
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/CreatedBatchResponse"
           headers:
             X-New-JWT:
               type: string
