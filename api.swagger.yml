@@ -628,7 +628,7 @@ paths:
               type: string
             Content-Type:
               type: string
-  /pdfs/customers/{customerId}:
+  /pdfs/customer/{customerId}:
     get:
       summary: Returns the given PDF for the given customer ID.
       description: Returns the given PDF for the given customer ID.
