@@ -138,7 +138,7 @@ paths:
               type: string
             Content-Type:
               type: string
-  /pdfs/batch_configs/{id}:
+  /pdfs/batch_config/{id}:
     post:
       summary: Generates a PDF from an existing batch config
       description: "Send a text file as content, can be CSV, fixed fields width, etc"
