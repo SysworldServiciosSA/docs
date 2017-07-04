@@ -288,6 +288,152 @@ paths:
             Content-Type:
               type: string
 
+  /validations/cbu:
+    post:
+      summary: Validates a CBU
+      description: This will attempt to validate a CBU testing its consistency and other factors
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - in: body
+        name: CBUValidationRequest
+        description: Payload to validate CBUs
+        required: true
+        schema:
+          $ref: "#/definitions/CBUValidationRequest"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/CBUValidationResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+
   /validations/email:
     post:
       summary: Validates an email address
@@ -324,7 +470,7 @@ paths:
         200:
           description: Successful operation
           schema:
-            $ref: "#/definitions/ValidationResponse"
+            $ref: "#/definitions/EmailValidationResponse"
           headers:
             X-New-JWT:
               type: string
@@ -822,6 +968,23 @@ definitions:
     title: ErrorResponse
     description: This is an error response for requests with status other than 2xx
 
+  CBUValidationRequest:
+    type: object
+    required:
+    - cbu
+    properties:
+      cbu:
+        type: string
+        description: The CBU to validate
+      alias:
+        type: string
+        description: The CBU alias to validate
+      dni:
+        type: string
+        description: The DNI to validate it matches against the CBU
+    title: CBUValidationRequest
+    description: Payload to validate CBUs
+
   EmailValidationRequest:
     type: object
     required:
@@ -832,6 +995,14 @@ definitions:
         description: The email address to validate
     title: EmailValidationRequest
     description: Payload to validate email addresses
+
+  CBUValidationResult:
+    type: "string"
+    title: "CBUValidationResult"
+    description: "Possible result values for CBU validations"
+    enum:
+    - valid
+    - invalid
 
   EmailValidationResult:
     type: "string"
@@ -963,7 +1134,59 @@ definitions:
     title: BatchResponse
     description: Result of requesting a batch information
 
-  ValidationResponse:
+  CBUValidationResponse:
+    type: object
+    required:
+    - id
+    - result
+    - success
+    - last_step
+    - extra
+    properties:
+      id:
+        type: string
+        description: The operation ID
+      result:
+        $ref: "#/definitions/CBUValidationResult"
+      success:
+        type: boolean
+        description: Result of the operation itself (can be true even if the object is not valid)
+      last_step:
+        type: string
+        description: Last step reached in the validation chain
+      bank_code:
+        type: string
+        description: Bank code
+      bank_name:
+        type: string
+        description: Bank name
+      branch_code:
+        type: string
+        description: Bank branch code
+      branch_name:
+        type: string
+        description: Bank branch name
+      branch_address:
+        type: string
+        description: Bank branch street address
+      branch_phone:
+        type: string
+        description: Bank branch phone number
+      branch_email:
+        type: string
+        description: Bank branch email
+      account:
+        type: string
+        description: Account number
+      extra:
+        type: array
+        items:
+          type: string
+        description: "Extra information after validation, e.g: error descriptions"
+    title: CBUValidationResponse
+    description: Response of a CBU validation
+
+  EmailValidationResponse:
     type: object
     required:
     - id
@@ -991,5 +1214,5 @@ definitions:
         items:
           type: string
         description: "Extra information after validation, e.g: error descriptions"
-    title: ValidationResponse
+    title: EmailValidationResponse
     description: Response of an email address validation
