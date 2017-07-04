@@ -288,6 +288,152 @@ paths:
             Content-Type:
               type: string
 
+  /validations/address:
+    post:
+      summary: Validates a street address
+      description: This will attempt to validate a street address
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - in: body
+        name: AddressValidationRequest
+        description: Payload to validate Addresses
+        required: true
+        schema:
+          $ref: "#/definitions/AddressValidationRequest"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/AddressValidationResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+
   /validations/cbu:
     post:
       summary: Validates a CBU
@@ -985,6 +1131,17 @@ definitions:
     title: CBUValidationRequest
     description: Payload to validate CBUs
 
+  AddressValidationRequest:
+    type: object
+    required:
+    - address
+    properties:
+      address:
+        type: string
+        description: The address to validate
+    title: AddressValidationRequest
+    description: Payload to validate addresses
+
   EmailValidationRequest:
     type: object
     required:
@@ -995,6 +1152,15 @@ definitions:
         description: The email address to validate
     title: EmailValidationRequest
     description: Payload to validate email addresses
+
+  AddressValidationResult:
+    type: "string"
+    title: "AddressValidationResult"
+    description: "Possible result values for Address validations"
+    enum:
+    - valid
+    - invalid
+    - unknown
 
   CBUValidationResult:
     type: "string"
@@ -1068,6 +1234,60 @@ definitions:
     - internal_error
     - line_too_long
 
+  Addresses:
+    type: array
+    title: A collection of street addresses
+    description: A collection of street addresses
+    items:
+      $ref: "#/definitions/Address"
+
+  Address:
+    type: object
+    title: An address
+    description: Full information of a street address
+    required:
+    - fullAddress
+    - latitude
+    - longitude
+    - postalCodeSuffix
+    - portalCode
+    - country
+    - admin1
+    - admin2
+    - street
+    - street_number
+    properties:
+      fullAddress:
+        type: string
+        description: Full human readable street address
+      latitude:
+        type: number
+        description: Latitude of the street address
+      longitude:
+        type: number
+        description: Latitude of the street address
+      postalCodeSuffix:
+        type: string
+        description: The postal code suffix (if any) for the street address
+      postalCode:
+        type: string
+        description: The postal code for the street address
+      country:
+        type: string
+        description: ISO2 country code
+      admin1:
+        type: string
+        description: Regional/Political subdivision inside country
+      admin2:
+        type: string
+        description: Regional/Political subdivision inside admin1
+      street:
+        type: string
+        description: The street of the street address
+      street_number:
+        type: string
+        description: The street number of the street address
+
   Batch:
     type: object
     required:
@@ -1133,6 +1353,37 @@ definitions:
         description: Result of the operation itself (can be true even if the object is not valid)
     title: BatchResponse
     description: Result of requesting a batch information
+
+  AddressValidationResponse:
+    type: object
+    required:
+    - id
+    - result
+    - success
+    - last_step
+    - extra
+    - results
+    properties:
+      id:
+        type: string
+        description: The operation ID
+      result:
+        $ref: "#/definitions/AddressValidationResult"
+      success:
+        type: boolean
+        description: Result of the operation itself (can be true even if the object is not valid)
+      last_step:
+        type: string
+        description: Last step reached in the validation chain
+      results:
+        $ref: "#/definitions/Addresses"
+      extra:
+        type: array
+        items:
+          type: string
+        description: "Extra information after validation, e.g: error descriptions"
+    title: AddressValidationResponse
+    description: Response of an address validation
 
   CBUValidationResponse:
     type: object
