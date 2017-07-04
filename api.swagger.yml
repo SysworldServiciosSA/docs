@@ -1250,7 +1250,7 @@ definitions:
     - latitude
     - longitude
     - postalCodeSuffix
-    - portalCode
+    - postalCode
     - country
     - admin1
     - admin2
