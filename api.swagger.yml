@@ -1233,6 +1233,7 @@ definitions:
     enum:
     - internal_error
     - line_too_long
+    - line_too_short
 
   Addresses:
     type: array
