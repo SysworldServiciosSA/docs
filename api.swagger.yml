@@ -138,11 +138,11 @@ paths:
         required: true
         type: string
       - in: body
-        name: EmptyRequest
+        name: LoginRequest
         required: true
         description: No payload
         schema:
-          $ref: "#/definitions/Empty"
+          $ref: "#/definitions/LoginRequest"
       responses:
         200:
           description: Successful operation
@@ -1292,6 +1292,15 @@ definitions:
     - invalid
     - unknown
     - retry_later
+
+  LoginRequest:
+    type: object
+    properties:
+      forever:
+        type: boolean
+        description: "If true, no expiration will be set in the JWT"
+    title: LoginRequest
+    description: Login Request
 
   LoginResponse:
     type: object
