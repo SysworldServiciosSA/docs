@@ -1246,18 +1246,18 @@ definitions:
     title: An address
     description: Full information of a street address
     required:
-    - fullAddress
+    - full_address
     - latitude
     - longitude
-    - postalCodeSuffix
-    - postalCode
+    - postal_code_suffix
+    - postal_code
     - country
     - admin1
     - admin2
     - street
     - street_number
     properties:
-      fullAddress:
+      full_address:
         type: string
         description: Full human readable street address
       latitude:
@@ -1266,10 +1266,10 @@ definitions:
       longitude:
         type: number
         description: Latitude of the street address
-      postalCodeSuffix:
+      postal_code_suffix:
         type: string
         description: The postal code suffix (if any) for the street address
-      postalCode:
+      postal_code:
         type: string
         description: The postal code for the street address
       country:
