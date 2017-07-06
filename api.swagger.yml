@@ -10,7 +10,7 @@ schemes:
 host: api-staging.enviocertificado.com
 
 paths:
-  /users/{id}:
+  /users/{email}:
     get:
       summary: Returns if a given user exists. No authorization is required.
       description: Returns if a given user exists. No authorization is required.
@@ -19,9 +19,9 @@ paths:
       produces:
         - application/json
       parameters:
-      - name: "id"
+      - name: "email"
         in: "path"
-        description: The Username
+        description: The user email
         required: true
         type: "string"
       - in: body
