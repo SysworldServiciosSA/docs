@@ -547,6 +547,152 @@ paths:
             Content-Type:
               type: string
 
+  /validations/phone:
+    post:
+      summary: Validates a Phone
+      description: This will attempt to validate a Phone Number testing its consistency and other factors
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - in: body
+        name: PhoneValidationRequest
+        description: Payload to validate Phone Numbers
+        required: true
+        schema:
+          $ref: "#/definitions/PhoneValidationRequest"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/PhoneValidationResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+
   /validations/cbu:
     post:
       summary: Validates a CBU
@@ -1205,6 +1351,30 @@ paths:
             Content-Type:
               type: string
 definitions:
+  PhoneValidationResult:
+    type: "string"
+    title: "PhoneValidationResult"
+    description: "Possible result values for Phone validations"
+    enum:
+    - valid
+    - invalid
+
+  PhoneType:
+    type: "string"
+    title: "PhoneType"
+    description: "Possible phone types"
+    enum:
+    - fixed
+    - mobile
+    - fixed_or_mobile
+    - toll_free
+    - premium
+    - shared_cost
+    - voip
+    - personal_number
+    - pager
+    - uan
+
   Empty:
     type: "object"
     title: "Empty Schema"
@@ -1226,6 +1396,103 @@ definitions:
           type: string
     title: ErrorResponse
     description: This is an error response for requests with status other than 2xx
+
+  PhoneValidationRequest:
+    type: object
+    required:
+    - phone
+    - default_country_code
+    - default_area_code
+    - numbering_plan
+    properties:
+      phone:
+        type: string
+        description: The Phone to validate
+      numbering_plan:
+        type: string
+        description: 2-letter ISO code of the country where this number should be dialed from
+      default_country_code:
+        type: integer
+        description: Will use this country code when unable to guess it
+      default_area_code:
+        type: integer
+        description: Will use this area code when unable to guess it
+      with_hlr:
+        type: boolean
+        description: Perform an HLR lookup
+    title: PhoneValidationRequest
+    description: Payload to validate Phone Numbers
+
+  PhoneValidationResponse:
+    type: object
+    required:
+    - id
+    - result
+    - success
+    - last_step
+    - extra
+    - type
+    - national_number
+    - national_format
+    - longitude
+    - latitude
+    - international_format
+    - country_iso
+    - country_code
+    - carrier
+    - area_geo
+    - area_code
+    properties:
+      id:
+        type: string
+        description: The operation ID
+      result:
+        $ref: "#/definitions/AddressValidationResult"
+      success:
+        type: boolean
+        description: Result of the operation itself (can be true even if the object is not valid)
+      last_step:
+        type: string
+        description: Last step reached in the validation chain
+      area_code:
+        type: string
+        description: Area code for this number
+      area_geo:
+        type: string
+        description: Geographical region name for this number
+      carrier:
+        type: string
+        description: Carrier owner of this number
+      country_code:
+        type: string
+        description: Country dial code for this number
+      country_iso:
+        type: string
+        description: 2-letter iso code of the country for this number
+      international_format:
+        type: string
+        description: E164 number
+      latitude:
+        type: string
+        description: Latitude location of the region for this number
+      longitude:
+        type: string
+        description: Longitude location of the region for this number
+      national_format:
+        type: string
+        description: How this number should be dialed from inside the country
+      national_number:
+        type: string
+        description: The "national" part of the E164 number
+      type:
+        $ref: "#/definitions/PhoneType"
+      extra:
+        type: array
+        items:
+          type: string
+        description: "Extra information after validation, e.g: error descriptions"
+    title: PhoneValidationResponse
+    description: Response of a phone validation
 
   CBUValidationRequest:
     type: object
