@@ -819,6 +819,26 @@ paths:
         required: false
         type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "with_hlr"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when sending a batch"
+      - name: "numbering_plan"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when sending a batch"
+      - name: "default_area_code"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when sending a batch"
+      - name: "default_country_code"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when sending a batch"
       - in: body
         name: PhoneValidationRequest
         description: Payload to validate Phone Numbers
@@ -826,6 +846,25 @@ paths:
         schema:
           $ref: "#/definitions/PhoneValidationRequest"
       responses:
+        202:
+          description: Only when content-type is text/csv. Your batch was accepted and will be eventually processed
+          schema:
+            $ref: "#/definitions/CreatedBatchResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         200:
           description: Successful operation
           schema:
