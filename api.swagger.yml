@@ -10,6 +10,110 @@ schemes:
 host: api-staging.enviocertificado.com
 
 paths:
+  /validations/identity/ar:
+    post:
+      summary: Validates a given identity against local authorities.
+      description: Validates a given identity against local authorities.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - in: body
+        name: IdentityValidationARRequest
+        required: true
+        schema:
+          $ref: "#/definitions/IdentityValidationARRequest"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/IdentityValidationARResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
   /validations/identity/ar/tax_certificate/{id}:
     post:
       summary: Returns the Tax Certificate for the given Tax ID.
@@ -1540,6 +1644,142 @@ definitions:
           type: string
     title: ErrorResponse
     description: This is an error response for requests with status other than 2xx
+
+  Gender:
+    type: string
+    title: Gender
+    description: Possible gender options
+    enum:
+    - m
+    - f
+
+  IdentityValidationARRequest:
+    type: object
+    properties:
+      cuit_cuil:
+        type: string
+        description: The CUIT/CUIL to validate/lookup. Use with or without 'dni'.
+      dni:
+        type: string
+        description: The DNI to validate/lookup. MUST use with 'gender'. May be used with or without 'cuit_cuil'.
+      gender:
+        $ref: "#/definitions/Gender"
+    title: IdentityValidationARRequest
+    description: Payload to validate Argentine identities
+
+  IdentityValidationValidationResult:
+    type: string
+    title: IdentityValidationValidationResult
+    description: Possible result values for Identity validations
+    enum:
+    - valid
+    - invalid
+
+  Monotributo:
+    type: object
+    required:
+    - id
+    - categoria
+    properties:
+      id:
+        type: integer
+        #description:
+      categoria:
+        type: integer
+        #description:
+
+  IdentityValidationARResponse:
+    type: object
+    required:
+    - id
+    - result
+    - success
+    - last_step
+    - extra
+    properties:
+      id:
+        type: string
+        description: The operation ID
+      result:
+        $ref: "#/definitions/IdentityValidationValidationResult"
+      success:
+        type: boolean
+        description: Result of the operation itself (can be true even if the object is not valid)
+      last_step:
+        type: string
+        description: Last step reached in the validation chain
+      extra:
+        type: array
+        items:
+          type: string
+        description: "Extra information after validation, e.g: error descriptions"
+      provincia:
+        type: integer
+        #description:
+      persona_tipo:
+        type: string
+        #description:
+      persona_documento:
+        type: string
+        #description:
+      persona_documento_tipo:
+        type: string
+        #description:
+      persona_clave:
+        type: string
+        #description:
+      nombre:
+        type: string
+        #description:
+      monotributos:
+        type: array
+        items:
+          $ref: "#/definitions/Monotributo"
+        #description:
+      mes_cierre:
+        type: integer
+        #description:
+      impuestos:
+        type: array
+        items:
+          type: integer
+        #description:
+      caracterizaciones:
+        type: array
+        items:
+          type: integer
+        #description:
+      actividades:
+        type: array
+        items:
+          type: integer
+        #description:
+      fecha_inscripcion_str:
+        type: string
+        #description:
+      fecha_inscripcion:
+        type: integer
+        #description:
+      fecha_contrato_social_str:
+        type: string
+        #description:
+      fecha_contrato_social:
+        type: integer
+        #description:
+      direccion:
+        type: string
+        #description:
+      codigo_postal:
+        type: string
+        #description:
+      clave_tipo:
+        type: string
+        #description:
+      clave_estado:
+        type: string
+        #description:
+    title: IdentityValidationARResponse
+    description: Response of an identity validation
 
   PhoneValidationRequest:
     type: object
