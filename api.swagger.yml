@@ -800,6 +800,8 @@ paths:
       summary: Validates a Phone
       description: This will attempt to validate a Phone Number testing its consistency and other factors
       consumes:
+        - multipart/form-data
+        - text/csv
         - application/json
       produces:
         - application/json
@@ -985,6 +987,8 @@ paths:
       summary: Validates a CBU
       description: This will attempt to validate a CBU testing its consistency and other factors
       consumes:
+        - multipart/form-data
+        - text/csv
         - application/json
       produces:
         - application/json
@@ -1030,7 +1034,25 @@ paths:
               type: string
             Access-Control-Allow-Headers:
               type: string
-
+        202:
+          description: Only when content-type is text/csv. Your batch was accepted and will be eventually processed
+          schema:
+            $ref: "#/definitions/CreatedBatchResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
         400:
           description: Client Error, Bad Request
           schema:
