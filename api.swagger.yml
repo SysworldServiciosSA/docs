@@ -258,7 +258,7 @@ paths:
               type: string
             Content-Type:
               type: string
-  /users/{email}/reset_password/{token}:
+  /reset_password/{token}:
     post:
       summary: Effectively changes a user password. The token is obtained from /users/{email}/reset_password
       description: Effectively changes a user password. The token is obtained from /users/{email}/reset_password
