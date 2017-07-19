@@ -19,6 +19,11 @@ paths:
       produces:
         - application/json
       parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
       - name: "organization_id"
         in: "query"
         required: false
@@ -140,6 +145,11 @@ paths:
       produces:
         - application/json
       parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
       - name: "organization_id"
         in: "query"
         required: false
@@ -278,6 +288,11 @@ paths:
       produces:
         - application/pdf
       parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
       - name: "organization_id"
         in: "query"
         required: false
