@@ -10,6 +10,125 @@ schemes:
 host: api-staging.enviocertificado.com
 
 paths:
+  /login_acl_check:
+    get:
+      summary: Tests the source IP against the ACL for this organization.
+      description: Tests the source IP against the ACL for this organization.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - in: body
+        name: EmptyRequest
+        required: true
+        schema:
+          $ref: "#/definitions/Empty"
+      responses:
+        200:
+          description: IP source is allowed to use this organization
+          schema:
+            $ref: "#/definitions/Empty"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
   /validations/identity/ar:
     post:
       summary: Validates a given identity against local authorities.
@@ -74,6 +193,21 @@ paths:
             Access-Control-Allow-Credentials:
               type: string
             Access-Control-Allow-Headers:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
               type: string
         405:
           description: Method Not Allowed
@@ -182,6 +316,21 @@ paths:
             Access-Control-Allow-Credentials:
               type: string
             Access-Control-Allow-Headers:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
               type: string
         404:
           description: Tax certificate not found for the given tax id
@@ -521,6 +670,21 @@ paths:
             Access-Control-Allow-Credentials:
               type: string
             Access-Control-Allow-Headers:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
               type: string
         404:
           description: User does not exist
