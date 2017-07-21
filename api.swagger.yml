@@ -1196,6 +1196,11 @@ paths:
         required: false
         type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "default_country"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when sending a batch"
       - in: body
         name: AddressValidationRequest
         description: Payload to validate Addresses
@@ -2513,7 +2518,11 @@ definitions:
     type: object
     required:
     - address
+    - default_country
     properties:
+      default_country:
+        type: string
+        description: 2-letter ISO code of the country where this address is expected to be from
       address:
         type: string
         description: The address to validate
