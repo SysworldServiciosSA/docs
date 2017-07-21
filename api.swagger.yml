@@ -803,6 +803,8 @@ paths:
           schema:
             $ref: "#/definitions/Empty"
           headers:
+            X-Next-Need-Captcha:
+              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
