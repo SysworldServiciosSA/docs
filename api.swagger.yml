@@ -1022,6 +1022,156 @@ paths:
               type: string
             Content-Type:
               type: string
+  /batch/schedule/{id}/execute:
+    post:
+      summary: Manually trigger the execution of a scheduled batch
+      description: Manually trigger the execution of a scheduled batch
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "id"
+        in: "path"
+        description: The Batch Schedule ID
+        required: true
+        type: "integer"
+      - in: body
+        name: EmptyRequest
+        required: true
+        description: No payload
+        schema:
+          $ref: "#/definitions/Empty"
+      responses:
+        202:
+          description: Your batch was accepted and will be eventually processed
+          schema:
+            $ref: "#/definitions/CreatedBatchResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+
   /pdfs/batch_config/{id}:
     post:
       summary: Generates a PDF from an existing batch config
