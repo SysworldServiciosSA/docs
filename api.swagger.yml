@@ -134,294 +134,7 @@ paths:
               type: string
             Content-Type:
               type: string
-  /validations/identity/ar:
-    post:
-      summary: Validates a given identity against local authorities.
-      description: Validates a given identity against local authorities.
-      consumes:
-        - multipart/form-data
-        - text/csv
-        - application/json
-      produces:
-        - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
-        required: true
-        type: string
-      - name: "organization_id"
-        in: "query"
-        required: false
-        type: "string"
-        description: "Required when using Bearer (i.e: JWT) authentication"
-      - name: "department_id"
-        in: "query"
-        required: false
-        type: "string"
-        description: "Required when using Bearer (i.e: JWT) authentication"
-      - in: body
-        name: IdentityValidationARRequest
-        required: true
-        schema:
-          $ref: "#/definitions/IdentityValidationARRequest"
-      responses:
-        202:
-          description: Only when content-type is text/csv. Your batch was accepted and will be eventually processed
-          schema:
-            $ref: "#/definitions/CreatedBatchResponse"
-          headers:
-            X-New-JWT:
-              type: string
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Methods:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Access-Control-Allow-Headers:
-              type: string
-        200:
-          description: Successful operation
-          schema:
-            $ref: "#/definitions/IdentityValidationARResponse"
-          headers:
-            X-New-JWT:
-              type: string
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Methods:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Access-Control-Allow-Headers:
-              type: string
-        401:
-          description: Not Authorized
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        405:
-          description: Method Not Allowed
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        406:
-          description: Not Acceptable
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        415:
-          description: Unsupported Media Type
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        500:
-          description: Server Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-  /validations/identity/ar/tax_certificate/{id}:
-    post:
-      summary: Returns the Tax Certificate for the given Tax ID.
-      description: Returns the Tax Certificate for the given Tax ID.
-      consumes:
-        - application/json
-      produces:
-        - application/pdf
-      parameters:
-      - name: Authorization
-        in: header
-        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
-        required: true
-        type: string
-      - name: "organization_id"
-        in: "query"
-        required: false
-        type: "string"
-        description: "Required when using Bearer (i.e: JWT) authentication"
-      - name: "department_id"
-        in: "query"
-        required: false
-        type: "string"
-        description: "Required when using Bearer (i.e: JWT) authentication"
-      - name: "id"
-        in: "path"
-        description: The tax id
-        required: true
-        type: "string"
-      - in: body
-        name: EmptyRequest
-        required: true
-        description: No payload
-        schema:
-          $ref: "#/definitions/Empty"
-      responses:
-        200:
-          description: Tax Certificate found.
-          schema:
-            $ref: "#/definitions/Empty"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Methods:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Access-Control-Allow-Headers:
-              type: string
-        401:
-          description: Not Authorized
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        404:
-          description: Tax certificate not found for the given tax id
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        405:
-          description: Method Not Allowed
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        406:
-          description: Not Acceptable
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        415:
-          description: Unsupported Media Type
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        500:
-          description: Server Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
+
   /reset_password/{token}:
     get:
       summary: Validates a token for resetting a password.
@@ -1022,11 +735,13 @@ paths:
               type: string
             Content-Type:
               type: string
-  /batch/schedule/{id}/execute:
+  /validations/identity/ar:
     post:
-      summary: Manually trigger the execution of a scheduled batch
-      description: Manually trigger the execution of a scheduled batch
+      summary: Validates a given identity against local authorities.
+      description: Validates a given identity against local authorities.
       consumes:
+        - multipart/form-data
+        - text/csv
         - application/json
       produces:
         - application/json
@@ -1046,11 +761,154 @@ paths:
         required: false
         type: "string"
         description: "Required when using Bearer (i.e: JWT) authentication"
+      - in: body
+        name: IdentityValidationARRequest
+        required: true
+        schema:
+          $ref: "#/definitions/IdentityValidationARRequest"
+      responses:
+        202:
+          description: Only when content-type is text/csv. Your batch was accepted and will be eventually processed
+          schema:
+            $ref: "#/definitions/CreatedBatchResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/IdentityValidationARResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+  /validations/identity/ar/tax_certificate/{id}:
+    post:
+      summary: Returns the Tax Certificate for the given Tax ID.
+      description: Returns the Tax Certificate for the given Tax ID.
+      consumes:
+        - application/json
+      produces:
+        - application/pdf
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
       - name: "id"
         in: "path"
-        description: The Batch Schedule ID
+        description: The tax id
         required: true
-        type: "integer"
+        type: "string"
       - in: body
         name: EmptyRequest
         required: true
@@ -1058,163 +916,11 @@ paths:
         schema:
           $ref: "#/definitions/Empty"
       responses:
-        202:
-          description: Your batch was accepted and will be eventually processed
-          schema:
-            $ref: "#/definitions/CreatedBatchResponse"
-          headers:
-            X-New-JWT:
-              type: string
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Methods:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Access-Control-Allow-Headers:
-              type: string
-        400:
-          description: Client Error, Bad Request
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-New-JWT:
-              type: string
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        401:
-          description: Not Authorized
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        405:
-          description: Method Not Allowed
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        406:
-          description: Not Acceptable
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        415:
-          description: Unsupported Media Type
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-        500:
-          description: Server Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-          headers:
-            X-New-JWT:
-              type: string
-            X-Request-ID:
-              type: string
-            X-Request-Time:
-              type: integer
-            Access-Control-Allow-Origin:
-              type: string
-            Access-Control-Allow-Credentials:
-              type: string
-            Content-Type:
-              type: string
-
-  /pdfs/batch_config/{id}:
-    post:
-      summary: Generates a PDF from an existing batch config
-      description: "Send a text file as content, can be CSV, fixed fields width, etc"
-      consumes:
-        - multipart/form-data
-        - text/csv
-      produces:
-        - application/json
-      parameters:
-      - name: Authorization
-        in: header
-        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
-        required: true
-        type: string
-      - name: "organization_id"
-        in: "query"
-        required: false
-        type: "string"
-        description: "Required when using Bearer (i.e: JWT) authentication"
-      - name: "department_id"
-        in: "query"
-        required: false
-        type: "string"
-        description: "Required when using Bearer (i.e: JWT) authentication"
-      - name: "id"
-        in: "path"
-        description: The Batch Configuration ID
-        required: true
-        type: "integer"
-      - name: file
-        in: formData
-        description: The uploaded file data
-        required: true
-        type: file
-      responses:
         200:
-          description: Successful operation
+          description: Tax Certificate found.
           schema:
-            $ref: "#/definitions/CreatedBatchResponse"
+            $ref: "#/definitions/Empty"
           headers:
-            X-New-JWT:
-              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
@@ -1227,13 +933,11 @@ paths:
               type: string
             Access-Control-Allow-Headers:
               type: string
-        400:
-          description: Client Error, Bad Request
+        401:
+          description: Not Authorized
           schema:
             $ref: "#/definitions/ErrorResponse"
           headers:
-            X-New-JWT:
-              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
@@ -1244,8 +948,8 @@ paths:
               type: string
             Content-Type:
               type: string
-        401:
-          description: Not Authorized
+        404:
+          description: Tax certificate not found for the given tax id
           schema:
             $ref: "#/definitions/ErrorResponse"
           headers:
@@ -1309,8 +1013,6 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
           headers:
-            X-New-JWT:
-              type: string
             X-Request-ID:
               type: string
             X-Request-Time:
@@ -1321,7 +1023,6 @@ paths:
               type: string
             Content-Type:
               type: string
-
   /validations/address:
     post:
       summary: Validates a street address
@@ -2012,6 +1713,155 @@ paths:
               type: string
             Content-Type:
               type: string
+  /batch/schedule/{id}/execute:
+    post:
+      summary: Manually trigger the execution of a scheduled batch
+      description: Manually trigger the execution of a scheduled batch
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "id"
+        in: "path"
+        description: The Batch Schedule ID
+        required: true
+        type: "integer"
+      - in: body
+        name: EmptyRequest
+        required: true
+        description: No payload
+        schema:
+          $ref: "#/definitions/Empty"
+      responses:
+        202:
+          description: Your batch was accepted and will be eventually processed
+          schema:
+            $ref: "#/definitions/CreatedBatchResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
 
   /batch/{id}:
     get:
@@ -2187,6 +2037,156 @@ paths:
               type: string
             Content-Type:
               type: string
+  /pdfs/batch_config/{id}:
+    post:
+      summary: Generates a PDF from an existing batch config
+      description: "Send a text file as content, can be CSV, fixed fields width, etc"
+      consumes:
+        - multipart/form-data
+        - text/csv
+      produces:
+        - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "id"
+        in: "path"
+        description: The Batch Configuration ID
+        required: true
+        type: "integer"
+      - name: file
+        in: formData
+        description: The uploaded file data
+        required: true
+        type: file
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/CreatedBatchResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+
   /pdfs/customer/{customerId}:
     get:
       summary: Returns the given PDF for the given customer ID.
