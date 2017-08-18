@@ -2012,6 +2012,154 @@ paths:
               type: string
             Content-Type:
               type: string
+  /batch:
+    get:
+      summary: Returns all baches paginated"
+      description: Returns all baches paginated"
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+      - name: Authorization
+        in: header
+        description: Use 'Basic' with 'apikey' as username and your api key as the password. Or 'Bearer' and your JWT.
+        required: true
+        type: string
+      - name: "organization_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "department_id"
+        in: "query"
+        required: false
+        type: "string"
+        description: "Required when using Bearer (i.e: JWT) authentication"
+      - name: "page"
+        in: "query"
+        description: Page number
+        required: false
+        type: "integer"
+      - name: "page_size"
+        in: "query"
+        description: Page size
+        required: false
+        type: "integer"
+      responses:
+        200:
+          description: Successful operation
+          schema:
+            $ref: "#/definitions/BatchPageResponse"
+          headers:
+            X-Next-Need-Captcha:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Methods:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Access-Control-Allow-Headers:
+              type: string
+        400:
+          description: Client Error, Bad Request
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        401:
+          description: Not Authorized
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        405:
+          description: Method Not Allowed
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        406:
+          description: Not Acceptable
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        415:
+          description: Unsupported Media Type
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
+        500:
+          description: Server Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          headers:
+            X-New-JWT:
+              type: string
+            X-Request-ID:
+              type: string
+            X-Request-Time:
+              type: integer
+            Access-Control-Allow-Origin:
+              type: string
+            Access-Control-Allow-Credentials:
+              type: string
+            Content-Type:
+              type: string
 
   /batch/{id}:
     get:
@@ -2986,6 +3134,36 @@ definitions:
         description: "Extra information after validation, e.g: error descriptions"
     title: CBUValidationResponse
     description: Response of a CBU validation
+
+  BatchPageResponse:
+    type: object
+    required:
+      - page_size
+      - page_number
+      - entries
+      - total_entries
+      - total_pages
+      - success
+    properties:
+      page_size:
+        type: integer
+        description: The page size
+      page_number:
+        type: integer
+        description: The page number
+      entries:
+        type: array
+        items:
+          $ref: "#/definitions/Batch"
+      success:
+        type: boolean
+        description: Result of the operation itself
+      total_pages:
+        type: integer
+        description: Total number of pages
+      total_entries:
+        type: integer
+        description: Total number of batches
 
   EmailValidationResponse:
     type: object
